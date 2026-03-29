@@ -1,5 +1,10 @@
 ---
 title: "About this site"
-description: |
-  This website is a showcase of coding and data visualisations as a part of my GV300 module at the University of Essex
+subtitle: "This website is a showcase of coding and data visualisations as a part of my GV300 module at the University of Essex!"
+output: 
+    html_document: 
+      theme: flatly
 ---
+
+
+Over the duration of my course I have learnt numerous functions of the Rstudio environment. I have gained experience in how to create and analyse data visualisations, looking specifically on how to create and analyse Linear, Choice and Measurement models and applying them to real world examples. We learnt theories such as IRT to gain an insight into how reliability and bias can effect the different models and data measurements. Another method I have learnt is the text as data approach, such as the Naive Bayes example, which has given me great insight into how to handle high-dimensional data in the form of text. 

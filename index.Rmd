@@ -1,16 +1,19 @@
 ---
 title: "Owen Graham"
 links:
-  - label: GV300 Showcase
-    url: "https://owen-graham-512.github.io/GV300-Assignment-4-/Assignment.html"        
+  - label: LinkedIn
+    url: "https://www.linkedin.com/in/owen-graham-258ba92b2"
+  - label: GitHub
+    url: "https://github.com/Owen-Graham-512"
 output:
-  postcards::jolla  
+  postcards::jolla
+site: distill::distill_website
 ---
  
-I am a third year undergraduate Student at the University of Essex from London. 
-My primary academic interests include development, both on a domestic, even 
-local, as well as international stage, and the data analysis behind them.
-Other interests include Corruption and the relationship between Government and
-the media. 
+I am a third year undergraduate student from London studying Politics and International Relations (BSc) at the University of Essex. 
 
+My primary academic interests include development, both on a domestic, even local, as well as international stage, and the data analysis behind them. Other interests include Corruption and the relationship between Government and the media. 
 
+I have achieved First-Class honours in both my first and second year at the University of Essex, being placed on the Dean's list in both years and awarded the Young Scholars Award. 
+
+Through the course for which I will present some of my work from on this site, I have developed excellent quantitative research skills, learning extensively how to use the RStudio environment. I am also completing the Q-Step accreditation alongside my degree in order to further my knowledge of data-analysis in the field of politics and international relations.

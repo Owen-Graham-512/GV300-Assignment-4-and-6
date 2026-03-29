@@ -1,5 +1,5 @@
 name: "Owen Graham RStudio Github Distill Website"
-title: "mfeo"
+title: "Owen Graham"
 description: |
   mfeo
 output_dir: "."
@@ -9,7 +9,9 @@ navbar:
       href: index.html
     - text: "About"
       href: about.html
-    - text: "Assignment"              
+    - text: "Data Visualisations"              
       href: Assignment.html           
+    - text: "Using text as data"
+      href: Assignmentpt2.html
 output: distill::distill_article
 
