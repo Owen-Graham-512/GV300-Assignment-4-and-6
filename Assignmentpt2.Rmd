@@ -1,6 +1,6 @@
 ---
 title: "Text as Data Showcase"
-description: "Using Text as Data methods such as naive bayes to understand the varying
+subtitle: "Using Text as Data methods such as naive bayes to understand the varying
   length and nature of Presidential election concession speeches."
 output: 
     html_document: 
@@ -67,9 +67,9 @@ I then went on to observe the potential political party imbalance in this data.
 table(speeches_sentences$Party)
 ```
 
-Finding a Republican party leaning set of data. 
+Finding a Democrat party leaning set of data. 
 
-This can lead to the classifier over-predicting the Republican Party concession speeches. 
+This can lead to the classifier over-predicting the Democrat Party concession speeches. 
 
 So we then clean the data, removing punctuation and numbers, adapting any misspelled words, and excluding dates.
 
