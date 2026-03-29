@@ -1,8 +1,9 @@
 ---
 title: "Owen Graham GV300 Assignment 4"
-description: |
-  Crossexamining valid votes in individual constituencies with turnout and location. 
-site: distill::distill_website
+subtitle: "Crossexamining valid votes in individual constituencies with turnout and location." 
+output: 
+    html_document: 
+      theme: flatly
 ---
 
 In this work I am showcasing here is derived from the dataset of the 2024 
@@ -12,7 +13,7 @@ constituency location.
 
 First the packages and dataset used must be loaded 
 
-```{r setup}
+```{r setup, echo=TRUE, message = FALSE, error = FALSE, warning = FALSE}
 library(tidyverse)
 library(ggplot2)
 ```
@@ -118,3 +119,32 @@ The resulting visualisation I believe creates a good clear representation of the
 data. It shows that Northern Ireland has the most equal-sized constituencies, 
 that Scotland has two major outliers but without them it is England that has the
 far most inequality in terms of constituency size. 
+
+Another way of creating a visualisation for this is through a simple histogram with an overall mean integrated.
+
+```{r data-vis2}
+
+overall_mean <- mean(uk$valid_votes)
+
+ggplot(uk, aes(x = valid_votes)) +
+  geom_histogram(bins = 30, fill = "steelblue", alpha = 0.7) +
+  geom_vline(xintercept = overall_mean, 
+             color = "red", linetype = "dashed", linewidth = 1) +
+  facet_wrap(~ country, ncol = 2) +
+  labs(
+    title = "Distribution of Constituency Sizes by Country",
+    subtitle = "Red line shows overall UK mean",
+    x = "Number of Valid Votes",
+    y = "Count of Constituencies"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(face = "bold", size = 14),
+    strip.text = element_text(face = "bold")
+  )
+```
+
+However, due to the large difference in number of constituencies between countries, I found this visualisation to be more difficult to read and the former example to be cleaner, however should you want to compare the average mean across all countries perhaps this is the better method.
+
+
+
