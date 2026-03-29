@@ -5,12 +5,9 @@ description: "Using Text as Data methods such as naive bayes to understand the v
 output: 
     html_document: 
       theme: flatly
-site: distill::distill_website
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
+
 
 The work I am showing here will focus on the Naive Bayes example with Quanteda, which manages to turn text into a form of data. 
 
