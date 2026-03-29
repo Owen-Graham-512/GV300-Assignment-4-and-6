@@ -1,0 +1,116 @@
+---
+title: "Text as Data Showcase"
+description: "Using Text as Data methods such as naive bayes to understand the varying
+  length and nature of Presidential election concession speeches."
+output: 
+    html_document: 
+      theme: flatly
+site: distill::distill_website
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+The work I am showing here will focus on the Naive Bayes example with Quanteda, which manages to turn text into a form of data. 
+
+First, I must load the required packages for the data process: 
+
+```{r, echo=TRUE, message = FALSE, error = FALSE, warning = FALSE}
+
+library(stringr)
+library(car)
+library(dplyr)
+library(quanteda)
+library(readtext)
+library(quanteda.textmodels)
+
+```
+
+Then I load in the data and turn it into a corpus object using quanteda. This will turn it into a more structured collection of text documents that can be analysed. 
+
+```{r}
+speeches <- readtext("Concession Speeches/*.txt")  
+speeches_corpus <- corpus(speeches) 
+summary(speeches_corpus)  
+```
+Tokens meaning the word count, and types meaning the number of different words used. 
+
+A major component of this research comes from the different examples, in this case concession speeches, that we are observing. So we then take a look at the different examples present. 
+
+```{r}
+nms <-names(speeches_corpus) 
+nms
+```
+
+Then, we are able to separate out the data into the categories of different concession speeches. 
+
+``` {r}
+speeches_corpus$Dates  <- paste(as.numeric(gsub('[^[:digit:]]','', names(speeches_corpus)))) 
+speeches_corpus$Party <- str_sub(nms, start= -5, -5) 
+speeches_corpus$PNames <- str_sub(nms, end = -12) 
+summary(speeches_corpus)
+```
+
+The 19 documents given are too small of a dataset so we then use quanteda to develop the corpus from being document based to sentence based, keeping the same variables. This will make it easier for us to spot patterns and form predictions. 
+
+```{r}
+speeches_sentences <- corpus_reshape(speeches_corpus, to = "sentences", use_docvars = TRUE) 
+summary(speeches_sentences)
+```
+Note: this does not mean all these documents only have one sentence but rather than we have now organised these documents into single sentences. 
+
+This can be useful in analysing speech patterns of those that lost Presidential elections and looking into their reaction. 
+
+I then went on to observe the potential political party imbalance in this data.
+
+```{r}
+table(speeches_sentences$Party)
+```
+
+Finding a Republican party leaning set of data. 
+
+This can lead to the classifier over-predicting the Republican Party concession speeches. 
+
+So we then clean the data, removing punctuation and numbers, adapting any misspelled words, and excluding dates.
+
+```{r}
+speech_tokens <- tokens(speeches_sentences, remove_punct = TRUE, remove_symbols = TRUE, split_hyphens = TRUE, remove_numbers = TRUE)
+speeches_clean <- tokens_wordstem(speech_tokens) 
+speeches_clean <- tokens_remove(speeches_clean, pattern = c("applpaus", "applause")) 
+speeches_clean <- tokens_select(speeches_clean, c("*st", "*th", "*rd"), selection = "remove") 
+speeches_clean <- dfm(speeches_clean)
+speeches_clean <- dfm_remove(speeches_clean,
+                      stopwords("english"))
+speeches_clean <- speeches_clean[, order(featnames(speeches_clean))]
+```
+
+I then use a training, development and testing set. This machine learning process allows training to fit the mode, develpment to tune the model for Naive Bayes and the testing to evaluate the final performance of the dataset. In this example I split it so that 60% is used for the training set, the next 20% for the development set and the final 20% for the testing set. 
+
+```{r}
+n <- nrow(speeches_clean)
+training_end <- round(0.6 * n)
+development_end <- round(0.8 * n)
+Concession_dfm_training <- speeches_clean[1:training_end, ]
+Concession_dfm_development <- speeches_clean[(training_end + 1):development_end, ]
+Concession_dfm_testing  <- speeches_clean[(development_end + 1):n, ]
+Concession_training_labels <- speeches_sentences$Party[1:training_end]
+Concession_development_labels   <- speeches_sentences$Party[(training_end + 1):development_end]
+Concession_testing_labels  <- speeches_sentences$Party[(development_end + 1):n]
+
+```
+
+We can now train the Naive Bayes model using the quanteda data package. 
+
+```{r}
+nb_model <- textmodel_nb(Concession_dfm_training, docvars(Concession_dfm_training, "Party"))
+summary(nb_model)
+```
+
+The Naive Bayes model is useful as it allows us to analyse words used in a document effectively. It is able to ignore the ordering of words and instead focus on which words appear, while allowing for words to be conditionally independent of eachother. 
+
+Here, our result allows for an even assumptive split of democrats and republicans and how often they may used particular words in their concession speeches. 
+
+
+
+

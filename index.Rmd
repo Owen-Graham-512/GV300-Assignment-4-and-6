@@ -17,3 +17,5 @@ My primary academic interests include development, both on a domestic, even loca
 I have achieved First-Class honours in both my first and second year at the University of Essex, being placed on the Dean's list in both years and awarded the Young Scholars Award. 
 
 Through the course for which I will present some of my work from on this site, I have developed excellent quantitative research skills, learning extensively how to use the RStudio environment. I am also completing the Q-Step accreditation alongside my degree in order to further my knowledge of data-analysis in the field of politics and international relations.
+
+
